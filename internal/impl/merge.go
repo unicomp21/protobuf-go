@@ -13,7 +13,9 @@ import (
 	piface "google.golang.org/protobuf/runtime/protoiface"
 )
 
-type mergeOptions struct{}
+type mergeOptions struct{
+	trueMapMerge bool
+}
 
 func (o mergeOptions) Merge(dst, src proto.Message) {
 	proto.Merge(dst, src)

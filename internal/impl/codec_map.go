@@ -378,6 +378,12 @@ func mergeMapOfMessage(dst, src pointer, f *coderFieldInfo, opts mergeOptions) {
 	iter := mapRange(srcm)
 	for iter.Next() {
 		val := reflect.New(f.ft.Elem().Elem())
+		if opts.trueMapMerge {
+			val2 := dstm.MapIndex(iter.Key())
+			if !val2.IsZero() {
+				val = val2
+			}
+		}
 		if f.mi != nil {
 			f.mi.mergePointer(pointerOfValue(val), pointerOfValue(iter.Value()), opts)
 		} else {
